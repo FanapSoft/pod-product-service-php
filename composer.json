@@ -1,0 +1,24 @@
+{
+    "name": "pod-sdk/pod-product-service",
+    "version": "1.0.0",
+    "type": "library",
+    "keywords": ["sdk", "pod sdk", "pod sdk product service", "pod product service"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Elham Keshtgar",
+            "email": "podsdk@fanap.ir"
+        }
+    ],
+    "description": "POD SDK Product Service",
+
+    "require": {
+        "ext-openssl": "*",
+        "pod-sdk/pod-base-service" : "^1.0.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pod\\Product\\Service\\" : "src/"
+        }
+    }
+}

@@ -16,16 +16,19 @@ class ProductService extends BaseService
 {
     private $header;
     private static $productApi;
+    private static $serviceProductId;
 
     public function __construct($baseInfo)
     {
         parent::__construct();
-        self::$jsonSchema = json_decode(file_get_contents(__DIR__. '/../jsonSchema.json'), true);
+        self::$jsonSchema = json_decode(file_get_contents(__DIR__ . '/../config/validationSchema.json'), true);
         $this->header = [
             '_token_issuer_'    =>  $baseInfo->getTokenIssuer(),
             '_token_'           => $baseInfo->getToken(),
         ];
         self::$productApi = require __DIR__ . '/../config/apiConfig.php';
+        self::$serviceProductId = require __DIR__ . '/../config/serviceProductId.php';
+
     }
 
     public function addProduct($params, $apiName = 'addProduct') {
@@ -34,6 +37,13 @@ class ProductService extends BaseService
         array_walk_recursive($params, 'self::prepareData');
 //        $paramKey = 'query'; // for request with array parameters only GET method give a valid result in pod codes!
         $relativeUri = self::$productApi[$apiName]['subUri'];
+
+        // if apiToken is set replace it
+        if (isset($params['apiToken'])) {
+            $header["_token_"] = $params['apiToken'];
+        }
+        unset($params['apiToken']);
+
         $option = [
             'headers' => $header,
             'query' => $params,
@@ -59,7 +69,8 @@ class ProductService extends BaseService
         if(isset($params['tagTrees']) && is_array($params['tagTrees'])){
             $params['tagTrees'] =  implode(',', $params['tagTrees']);
         }
-
+        # set service call product Id
+        $params['scProductId'] = self::$serviceProductId[$apiName];
         $option['withBracketParams'] = $withBracketParams;
         $option['withoutBracketParams'] = $params;
         //  unset `query` key because query string will be build in ApiRequestHandler and will be added to uri so dont need send again in query params
@@ -80,11 +91,19 @@ class ProductService extends BaseService
 
     public function addProducts($params) {
         $apiName = 'addProducts';
+        $optionHasArray = false;
         $header = $this->header;
         $header["Content-Type"] = 'application/x-www-form-urlencoded';
-        $paramKey = 'form_params';
+        $method = self::$productApi[$apiName]['method'];
+        $paramKey = $method == 'GET' ? 'query' : 'form_params';
         $relativeUri = self::$productApi[$apiName]['subUri'];
         array_walk_recursive($params, 'self::prepareData');
+
+        // if apiToken is set replace it
+        if (isset($params['apiToken'])) {
+            $header["_token_"] = $params['apiToken'];
+        }
+        unset($params['apiToken']);
 
         // prepare params to send
         foreach ($params['data'] as $dataKey => $data) {
@@ -110,15 +129,31 @@ class ProductService extends BaseService
             }
         }
 
+        # prepare params to send
+        # set service call product Id
+        $preparedParams['scProductId'] = self::$serviceProductId[$apiName];
+        $preparedParams['data'] =  json_encode($params['data']);
+
         $option = [
             'headers' => $header,
-            $paramKey => ['data' => json_encode($params['data'])],
+            $paramKey => $preparedParams,
         ];
+
+        if (isset($params['scVoucherHash'])) {
+            $preparedParams['scVoucherHash'] = $params['scVoucherHash'];
+            $option['withoutBracketParams'] =  $preparedParams;
+            unset($option[$paramKey]);
+            $optionHasArray = true;
+            $method = 'GET';
+        }
+
         return ApiRequestHandler::Request(
             self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
-            self::$productApi[$apiName]['method'],
+            $method,
             $relativeUri,
-            $option
+            $option,
+            false,
+            $optionHasArray
         );
     }
 
@@ -128,6 +163,13 @@ class ProductService extends BaseService
 //        $paramKey = self::$subscriptionApi[$apiName]['method'] == 'GET' ? 'query' : 'form_params';
         $relativeUri = self::$productApi[$apiName]['subUri'];
         array_walk_recursive($params, 'self::prepareData');
+
+        // if apiToken is set replace it
+        if (isset($params['apiToken'])) {
+            $header["_token_"] = $params['apiToken'];
+        }
+        unset($params['apiToken']);
+
         $option = [
             'headers' => $header,
             'query' => $params,
@@ -153,6 +195,8 @@ class ProductService extends BaseService
             $params['tagTrees'] =  implode(',', $params['tagTrees']);
         }
 
+        # set service call product Id
+        $params['scProductId'] = self::$serviceProductId[$apiName];
         $option['withBracketParams'] = $withBracketParams;
         $option['withoutBracketParams'] = $params;
         //  unset `query` key because query string will be build in ApiRequestHandler and will be added to uri so dont need send again in query params
@@ -169,11 +213,19 @@ class ProductService extends BaseService
 
     public function updateProducts($params) {
         $apiName = 'updateProducts';
+        $optionHasArray = false;
         $header = $this->header;
         $header["Content-Type"] = 'application/x-www-form-urlencoded';
-        $paramKey = 'form_params';
+        $method = self::$productApi[$apiName]['method'];
+        $paramKey = $method == 'GET' ? 'query' : 'form_params';
         $relativeUri = self::$productApi[$apiName]['subUri'];
         array_walk_recursive($params, 'self::prepareData');
+
+        // if apiToken is set replace it
+        if (isset($params['apiToken'])) {
+            $header["_token_"] = $params['apiToken'];
+        }
+        unset($params['apiToken']);
 
         // prepare params to send
         foreach ($params['data'] as $dataKey => $data) {
@@ -198,31 +250,48 @@ class ProductService extends BaseService
             }
         }
 
+        # prepare params to send
+        # set service call product Id
+        $preparedParams['scProductId'] = self::$serviceProductId[$apiName];
+        $preparedParams['data'] =  json_encode($params['data']);
+
         $option = [
             'headers' => $header,
-            $paramKey => ['data' => json_encode($params['data'])],
+            $paramKey => $preparedParams,
         ];
+
+        if (isset($params['scVoucherHash'])) {
+            $preparedParams['scVoucherHash'] = $params['scVoucherHash'];
+            $option['withoutBracketParams'] =  $preparedParams;
+            unset($option[$paramKey]);
+            $optionHasArray = true;
+            $method = 'GET';
+        }
+
         return ApiRequestHandler::Request(
             self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
-            self::$productApi[$apiName]['method'],
+            $method,
             $relativeUri,
             $option,
             false,
-            true
+            $optionHasArray
         );
     }
 
     public function getProductList($params) {
         $apiName = 'getProductList';
         $header = $this->header;
-        // for this api we can use access token
-        if (isset($params['accessToken'])) {
-            $header["_token_"] = $params['accessToken'];
-        }
-        unset($params['accessToken']);
 
         $relativeUri = self::$productApi[$apiName]['subUri'];
         array_walk_recursive($params, 'self::prepareData');
+
+        // for this api we can use access token
+        // if token is set replace it
+        if (isset($params['token'])) {
+            $header["_token_"] = $params['token'];
+        }
+        unset($params['token']);
+
         $option = [
             'headers' => $header,
             'query' => $params,
@@ -248,6 +317,8 @@ class ProductService extends BaseService
             $params['tagTrees'] =  implode(',', $params['tagTrees']);
         }
 
+        # set service call product Id
+        $params['scProductId'] = self::$serviceProductId[$apiName];
         $option['withBracketParams'] = $withBracketParams;
         $option['withoutBracketParams'] = $params;
         //  unset `query` key because query string will be build in ApiRequestHandler and will be added to uri so dont need send again in query params
@@ -269,6 +340,13 @@ class ProductService extends BaseService
 //        $paramKey = self::$subscriptionApi[$apiName]['method'] == 'GET' ? 'query' : 'form_params';
         $relativeUri = self::$productApi[$apiName]['subUri'];
         array_walk_recursive($params, 'self::prepareData');
+
+        // if token is set replace it
+        if (isset($params['token'])) {
+            $header["_token_"] = $params['token'];
+        }
+
+        unset($params['token']);
         $option = [
             'headers' => $header,
             'query' => $params,
@@ -294,6 +372,8 @@ class ProductService extends BaseService
             $params['tagTrees'] =  implode(',', $params['tagTrees']);
         }
 
+        # set service call product Id
+        $params['scProductId'] = self::$serviceProductId[$apiName];
         $option['withBracketParams'] = $withBracketParams;
         $option['withoutBracketParams'] = $params;
         //  unset `query` key because query string will be build in ApiRequestHandler and will be added to uri so dont need send again in query params
@@ -311,40 +391,59 @@ class ProductService extends BaseService
     public function getAttributeTemplateList($params) {
         $apiName = 'getAttributeTemplateList';
         $header = $this->header;
-        // for this api we can use access token
-        if (isset($params['accessToken'])) {
-            $header["_token_"] = $params['accessToken'];
-        }
-        unset($params['accessToken']);
+        $optionHasArray = false;
 
         $paramKey = self::$productApi[$apiName]['method'] == 'GET' ? 'query' : 'form_params';
         $relativeUri = self::$productApi[$apiName]['subUri'];
         array_walk_recursive($params, 'self::prepareData');
+
+        // for this api we can use access token
+        // if token is set replace it
+        if (isset($params['token'])) {
+            $header["_token_"] = $params['token'];
+        }
+
+        unset($params['token']);
         $option = [
             'headers' => $header,
             $paramKey => $params,
         ];
 
         self::validateOption($apiName, $option, $paramKey);
+
+        # prepare params to send
+        # set service call product Id
+        $option[$paramKey]['scProductId'] = self::$serviceProductId[$apiName];
+
+        if (isset($params['scVoucherHash'])) {
+            $option['withoutBracketParams'] =  $option[$paramKey];
+            $optionHasArray = true;
+            unset($option[$paramKey]);
+        }
         return ApiRequestHandler::Request(
             self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
             self::$productApi[$apiName]['method'],
             $relativeUri,
-            $option
+            $option,
+            false,
+            $optionHasArray
         );
     }
 
     public function searchProduct($params) {
         $apiName = 'searchProduct';
         $header = $this->header;
-        // for this api we can use access token
-        if (isset($params['accessToken'])) {
-            $header["_token_"] = $params['accessToken'];
-        }
-        unset($params['accessToken']);
 //        $paramKey = self::$subscriptionApi[$apiName]['method'] == 'GET' ? 'query' : 'form_params';
         $relativeUri = self::$productApi[$apiName]['subUri'];
         array_walk_recursive($params, 'self::prepareData');
+
+        // for this api we can use access token
+        // if token is set replace it
+        if (isset($params['token'])) {
+            $header["_token_"] = $params['token'];
+        }
+        unset($params['token']);
+
         $option = [
             'headers' => $header,
             'query' => $params,
@@ -373,6 +472,68 @@ class ProductService extends BaseService
         if(isset($params['tagTrees']) && is_array($params['tagTrees'])){
             $params['tagTrees'] =  implode(',', $params['tagTrees']);
         }
+
+        # set service call product Id
+        $params['scProductId'] = self::$serviceProductId[$apiName];
+        $option['withBracketParams'] = $withBracketParams;
+        $option['withoutBracketParams'] = $params;
+        //  unset `query` key because query string will be build in ApiRequestHandler and will be added to uri so dont need send again in query params
+        unset($option['query']);
+        return ApiRequestHandler::Request(
+            self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
+            self::$productApi[$apiName]['method'],
+            $relativeUri,
+            $option,
+            false,
+            true
+        );
+    }
+
+    public function searchSubProduct($params) {
+        $apiName = 'searchSubProduct';
+        $header = $this->header;
+//        $paramKey = self::$subscriptionApi[$apiName]['method'] == 'GET' ? 'query' : 'form_params';
+        $relativeUri = self::$productApi[$apiName]['subUri'];
+        array_walk_recursive($params, 'self::prepareData');
+
+        // for this api we can use access token
+        // if token is set replace it
+        if (isset($params['token'])) {
+            $header["_token_"] = $params['token'];
+        }
+        unset($params['token']);
+
+        $option = [
+            'headers' => $header,
+            'query' => $params,
+        ];
+
+        self::validateOption($apiName, $option, 'query');
+        // prepare params to send
+        if (isset($params['query'])) {
+            $params['q'] = $params['query'];
+            unset($params['query']);
+        }
+        $withBracketParams = [];
+        if (isset($params['attributes'])) {
+            foreach ($params['attributes'] as $list) {
+                foreach ($list as $key => $value) {
+                    $withBracketParams[$key][] = $value;
+                }
+            }
+            unset($params['attributes']);
+        }
+
+        if(isset($params['tags']) && is_array($params['tags'])){
+            $params['tags'] =  implode(',', $params['tags']);
+        }
+
+        if(isset($params['tagTrees']) && is_array($params['tagTrees'])){
+            $params['tagTrees'] =  implode(',', $params['tagTrees']);
+        }
+
+        # set service call product Id
+        $params['scProductId'] = self::$serviceProductId[$apiName];
         $option['withBracketParams'] = $withBracketParams;
         $option['withoutBracketParams'] = $params;
         //  unset `query` key because query string will be build in ApiRequestHandler and will be added to uri so dont need send again in query params

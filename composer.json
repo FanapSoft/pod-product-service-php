@@ -1,6 +1,6 @@
 {
     "name": "pod-sdk/pod-product-service",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "type": "library",
     "keywords": ["sdk", "pod sdk", "pod sdk product service", "pod product service"],
     "license": "MIT",
@@ -14,7 +14,7 @@
 
     "require": {
         "ext-openssl": "*",
-        "pod-sdk/pod-base-service" : "^1.0.2"
+        "pod-sdk/pod-base-service" : "^2.0"
     },
     "autoload": {
         "psr-4": {

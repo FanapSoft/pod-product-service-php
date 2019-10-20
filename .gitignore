@@ -2,5 +2,4 @@
 .vscode/
 *Demo.php
 **/vendor/
-
-
+composer.lock

@@ -125,7 +125,7 @@
           "type": "array",
           "items": {
             "type": "array",
-            "properties": {
+            "items": {
               "attCode": {
                 "title": "لیست کد مشخصه های محصول بر اساس دسته مشخصه یا گروه محصول",
                 "description":"",
@@ -141,7 +141,9 @@
                 "title": "ایجاد گروه محصول با این مشخصه، اگر true باشد به همه زیر محصول ها اعمال میشود.",
                 "description":""
               }
-            }
+            },
+            "required": ["attCode", "attValue", "attGroup"],
+            "additionalItems": false
           }
         },
         "lat": {
@@ -206,11 +208,23 @@
           "title": "تعداد اعشار موجودی",
           "description":"",
           "type": "number"
+        },
+        "scVoucherHash": {
+            "type": "array",
+            "title": "کد تخفیف برای فراخوانی سرویس کال",
+            "description": "کد تخفیف برای فراخوانی سرویس کال",
+            "items": {
+                "type": "string"
+            }
+        },
+        "scApiKey": {
+            "type": "string",
+            "title": "توکن برای فراخوانی سرویس کال"
         }
       },
       "oneOf": [
-        {"required": ["name", "canComment", "canLike", "enable", "availableCount", "price", "discount"]},
-        {"required": ["name", "canComment", "canLike", "enable", "unlimited", "price", "discount"]}
+        {"required": ["name",  "description", "canComment", "canLike", "enable", "availableCount", "price", "discount"]},
+        {"required": ["name",  "description", "canComment", "canLike", "enable", "unlimited", "price", "discount"]}
       ],
       "additionalProperties": false
     }
@@ -296,7 +310,9 @@
               "attGroup": {
                 "type": "string"
               }
-            }
+            },
+            "required": ["attCode", "attValue", "attGroup"],
+            "additionalItems": false
           }
         },
         "groupId": {
@@ -309,6 +325,19 @@
         },
         "previewImage": {
           "type": "string"
+        },
+        "tags": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "string"
+            }
+          ]
         },
         "tagTrees": {
           "oneOf": [
@@ -333,6 +362,18 @@
         },
         "quantityPrecision": {
           "type": "number"
+        },
+        "scVoucherHash": {
+            "type": "array",
+            "title": "کد تخفیف برای فراخوانی سرویس کال",
+            "description": "کد تخفیف برای فراخوانی سرویس کال",
+            "items": {
+                "type": "string"
+            }
+        },
+        "scApiKey": {
+            "type": "string",
+            "title": "توکن برای فراخوانی سرویس کال"
         }
       },
       "oneOf": [
@@ -418,7 +459,9 @@
               "attGroup": {
                 "type": "string"
               }
-            }
+            },
+            "required": ["attCode", "attValue", "attGroup"],
+            "additionalItems": false
           }
         },
         "groupId": {
@@ -472,6 +515,18 @@
         },
         "quantityPrecision": {
           "type": "number"
+        },
+        "scVoucherHash": {
+                    "type": "array",
+                    "title": "کد تخفیف برای فراخوانی سرویس کال",
+                    "description": "کد تخفیف برای فراخوانی سرویس کال",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+        "scApiKey": {
+            "type": "string",
+            "title": "توکن برای فراخوانی سرویس کال"
         }
       },
       "oneOf": [
@@ -556,7 +611,7 @@
           "type": "array",
           "items": {
             "type": "array",
-            "properties": {
+            "items": {
               "attCode": {
                 "type": "string"
               },
@@ -566,7 +621,9 @@
               "attGroup": {
                 "type": "string"
               }
-            }
+            },
+            "required": ["attCode", "attValue", "attGroup"],
+            "additionalItems": false
           }
         },
         "groupId": {
@@ -631,11 +688,23 @@
         },
         "quantityPrecision": {
           "type": "number"
+        },
+        "scVoucherHash": {
+            "type": "array",
+            "title": "کد تخفیف برای فراخوانی سرویس کال",
+            "description": "کد تخفیف برای فراخوانی سرویس کال",
+            "items": {
+                "type": "string"
+            }
+        },
+        "scApiKey": {
+            "type": "string",
+            "title": "توکن برای فراخوانی سرویس کال"
         }
       },
       "oneOf": [
-        {"required": ["name",  "canComment", "canLike", "enable", "entityId", "price", "discount", "changePreview", "availableCount"]},
-        {"required": ["name", "canComment", "canLike", "enable", "entityId", "price", "discount", "changePreview", "unlimited"]}
+        {"required": ["name", "description", "canComment", "canLike", "enable", "entityId", "price", "discount", "changePreview", "availableCount"]},
+        {"required": ["name", "description", "canComment", "canLike", "enable", "entityId", "price", "discount", "changePreview", "unlimited"]}
       ],
       "additionalProperties": false
     }
@@ -698,7 +767,7 @@
           "type": "array",
           "items": {
             "type": "array",
-            "properties": {
+            "items": {
               "attCode": {
                 "type": "string"
               },
@@ -708,7 +777,9 @@
               "attGroup": {
                 "type": "string"
               }
-            }
+            },
+            "required": ["attCode", "attValue", "attGroup"],
+            "additionalItems": false
           }
         },
         "groupId": {
@@ -773,9 +844,24 @@
         },
         "quantityPrecision": {
           "type": "number"
+        },
+        "scVoucherHash": {
+            "type": "array",
+            "title": "کد تخفیف برای فراخوانی سرویس کال",
+            "description": "کد تخفیف برای فراخوانی سرویس کال",
+            "items": {
+                "type": "string"
+            }
+        },
+        "scApiKey": {
+            "type": "string",
+            "title": "توکن برای فراخوانی سرویس کال"
         }
       },
-      "required": ["name", "description", "canComment", "canLike", "enable", "entityId", "price", "discount", "changePreview"],
+      "oneOf": [
+        {"required": ["name", "description", "canComment", "canLike", "enable", "entityId", "price", "discount", "changePreview", "availableCount"]},
+        {"required": ["name", "description","canComment", "canLike", "enable", "entityId", "price", "discount", "changePreview", "unlimited"]}
+      ],
       "additionalProperties": false
     }
   },
@@ -872,14 +958,16 @@
           "description": "",
           "items": {
             "type": "array",
-            "properties": {
+            "items": {
               "attributeCode": {
                 "type": "string"
               },
               "attributeValue": {
                 "type": "string"
               }
-            }
+            },
+            "required": ["attributeCode", "attributeValue"],
+            "additionalItems": false
           }
         },
         "orderByLike": {
@@ -915,6 +1003,18 @@
           "items": {
             "type": "string"
           }
+        },
+        "scVoucherHash": {
+            "type": "array",
+            "title": "کد تخفیف برای فراخوانی سرویس کال",
+            "description": "کد تخفیف برای فراخوانی سرویس کال",
+            "items": {
+                "type": "string"
+            }
+        },
+        "scApiKey": {
+            "type": "string",
+            "title": "توکن برای فراخوانی سرویس کال"
         }
       },
       "oneOf" : [
@@ -1047,17 +1147,16 @@
           "description": "json حاوی اطلاعات جستجو بر روی صفات از نوع SearchMetadataCriteria"
         },
         "scVoucherHash": {
-          "type": "array",
-          "title": "کد تخفیف برای فراخوانی سرویس کال",
-          "description": "کد تخفیف برای فراخوانی سرویس کال",
-          "items": {
-            "type": "string"
-          }
+            "type": "array",
+            "title": "کد تخفیف برای فراخوانی سرویس کال",
+            "description": "کد تخفیف برای فراخوانی سرویس کال",
+            "items": {
+                "type": "string"
+            }
         },
         "scApiKey": {
-          "type": "string",
-          "title": "توکن برای فراخوانی سرویس کال",
-          "description": "توکن برای فراخوانی سرویس کال"
+            "type": "string",
+            "title": "توکن برای فراخوانی سرویس کال"
         }
       },
       "oneOf" : [
@@ -1110,11 +1209,22 @@
         "size": {
           "type": "integer",
           "minimum": 0
+        },
+        "scVoucherHash": {
+            "type": "array",
+            "title": "کد تخفیف برای فراخوانی سرویس کال",
+            "description": "کد تخفیف برای فراخوانی سرویس کال",
+            "items": {
+                "type": "string"
+            }
+        },
+        "scApiKey": {
+            "type": "string",
+            "title": "توکن برای فراخوانی سرویس کال"
         }
       },
       "oneOf" : [
         { "required": ["offset"]},
-        { "required": ["id"]},
         { "required": ["firstId"]},
         { "required": ["lastId"]}
         ],
@@ -1204,7 +1314,9 @@
               "attributeValue": {
                 "type": "string"
               }
-            }
+            },
+            "required": ["attributeCode", "attributeValue"],
+            "additionalItems": false
           }
         },
         "orderByLike": {
@@ -1230,6 +1342,18 @@
           "items": {
             "type": "string"
           }
+        },
+        "scVoucherHash": {
+            "type": "array",
+            "title": "کد تخفیف برای فراخوانی سرویس کال",
+            "description": "کد تخفیف برای فراخوانی سرویس کال",
+            "items": {
+                "type": "string"
+            }
+        },
+        "scApiKey": {
+            "type": "string",
+            "title": "توکن برای فراخوانی سرویس کال"
         }
       },
       "oneOf" : [
@@ -1238,6 +1362,102 @@
         { "required": ["firstId"]},
         { "required": ["lastId"]}
       ],
+      "additionalProperties": false
+    }
+  },
+
+  "searchSubProduct": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "_token_": {
+          "type": "string",
+          "minLength" : 1
+        },
+        "_token_issuer_": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "_token_",
+        "_token_issuer_"
+      ],
+      "additionalProperties": true
+    },
+    "query": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "productGroupId": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "attributeCode": {
+                "type": "string"
+              },
+              "attributeValue": {
+                "type": "string"
+              }
+            },
+            "required": ["attributeCode", "attributeValue"],
+            "additionalItems": false
+          }
+        },
+        "orderByLike": {
+          "type": "string",
+          "enum": ["asc", "desc"]
+        },
+        "orderByAttributeCode": {
+          "type": "string"
+        },
+        "orderByDirection": {
+          "type": "string",
+          "enum": ["asc", "desc"]
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tagTrees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "scVoucherHash": {
+            "type": "array",
+            "title": "کد تخفیف برای فراخوانی سرویس کال",
+            "description": "کد تخفیف برای فراخوانی سرویس کال",
+            "items": {
+                "type": "string"
+            }
+        },
+        "scApiKey": {
+            "type": "string",
+            "title": "توکن برای فراخوانی سرویس کال"
+        }
+      },
+      "required": ["productGroupId"],
+
       "additionalProperties": false
     }
   }

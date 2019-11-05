@@ -1141,11 +1141,21 @@
           "description": "مقادیر BUSINESS_PRODUCT، DEALER_PRODUCT_PERMISSION و PARENT_PRODUCT",
           "enum": ["PARENT_PRODUCT", "BUSINESS_PRODUCT", "DEALER_PRODUCT_PERMISSION"]
         },
-        "attributeSearchQuery": {
-          "type": "object",
-          "title": "",
-          "description": "json حاوی اطلاعات جستجو بر روی صفات از نوع SearchMetadataCriteria"
+        "attributeSearchQuery":{
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "",
+              "description": "json حاوی اطلاعات جستجو بر روی صفات از نوع SearchMetadataCriteria"
+            },
+            {
+              "type": "array",
+              "title": "",
+              "description": "json حاوی اطلاعات جستجو بر روی صفات از نوع SearchMetadataCriteria"
+            }
+          ]
         },
+
         "scVoucherHash": {
             "type": "array",
             "title": "کد تخفیف برای فراخوانی سرویس کال",

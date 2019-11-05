@@ -17,6 +17,7 @@ class ProductService extends BaseService
     private $header;
     private static $productApi;
     private static $serviceProductId;
+    private static $baseUri;
 
     public function __construct($baseInfo)
     {
@@ -28,6 +29,8 @@ class ProductService extends BaseService
         ];
         self::$productApi = require __DIR__ . '/../config/apiConfig.php';
         self::$serviceProductId = require __DIR__ . '/../config/serviceProductId.php';
+        self::$serviceProductId = self::$serviceProductId[self::$serverType];
+        self::$baseUri = self::$config[self::$serverType];
 
     }
 
@@ -372,6 +375,9 @@ class ProductService extends BaseService
             $params['tagTrees'] =  implode(',', $params['tagTrees']);
         }
 
+        if (isset($params['attributeSearchQuery']) && is_array($params['attributeSearchQuery'])) {
+            $params['attributeSearchQuery'] = json_encode($params['attributeSearchQuery']);
+        }
         # set service call product Id
         $params['scProductId'] = self::$serviceProductId[$apiName];
         $option['withBracketParams'] = $withBracketParams;

@@ -15,7 +15,7 @@ return
 
         "addProducts" => [
             "baseUri"   =>  'PLATFORM-ADDRESS',
-            'subUri' => 'nzh/doServiceCall',
+            'subUri'    => 'nzh/doServiceCall',
             "method"    =>  'POST'
         ],
 

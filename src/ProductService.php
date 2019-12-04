@@ -15,6 +15,7 @@ use Pod\Base\Service\ApiRequestHandler;
 class ProductService extends BaseService
 {
     private $header;
+    private static $jsonSchema;
     private static $productApi;
     private static $serviceProductId;
     private static $baseUri;
@@ -31,7 +32,6 @@ class ProductService extends BaseService
         self::$serviceProductId = require __DIR__ . '/../config/serviceProductId.php';
         self::$serviceProductId = self::$serviceProductId[self::$serverType];
         self::$baseUri = self::$config[self::$serverType];
-
     }
 
     public function addProduct($params, $apiName = 'addProduct') {
@@ -52,7 +52,7 @@ class ProductService extends BaseService
             'query' => $params,
         ];
 
-        self::validateOption($apiName, $option, 'query');
+        self::validateOption($option, self::$jsonSchema[$apiName], 'query');
 
         // prepare params to send
         $withBracketParams = [];
@@ -79,7 +79,7 @@ class ProductService extends BaseService
         //  unset `query` key because query string will be build in ApiRequestHandler and will be added to uri so dont need send again in query params
         unset($option['query']);
         return ApiRequestHandler::Request(
-            self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
+            self::$baseUri[self::$productApi[$apiName]['baseUri']],
             self::$productApi[$apiName]['method'],
             $relativeUri,
             $option,
@@ -113,7 +113,7 @@ class ProductService extends BaseService
             $optionPerData = [
                 $paramKey => $data,
             ];
-            self::validateOption($apiName, $optionPerData, $paramKey);
+            self::validateOption($optionPerData, self::$jsonSchema[$apiName], $paramKey);
             if (isset($data['attributes'])) {
                 foreach ($data['attributes'] as $list) {
                     foreach ($list as $key => $value) {
@@ -151,7 +151,7 @@ class ProductService extends BaseService
         }
 
         return ApiRequestHandler::Request(
-            self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
+            self::$baseUri[self::$productApi[$apiName]['baseUri']],
             $method,
             $relativeUri,
             $option,
@@ -178,7 +178,7 @@ class ProductService extends BaseService
             'query' => $params,
         ];
 
-        self::validateOption($apiName, $option, 'query');
+        self::validateOption($option, self::$jsonSchema[$apiName], 'query');
         // prepare params to send
         $withBracketParams = [];
         if (isset($params['attributes'])) {
@@ -205,7 +205,7 @@ class ProductService extends BaseService
         //  unset `query` key because query string will be build in ApiRequestHandler and will be added to uri so dont need send again in query params
         unset($option['query']);
         return ApiRequestHandler::Request(
-            self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
+            self::$baseUri[self::$productApi[$apiName]['baseUri']],
             self::$productApi[$apiName]['method'],
             $relativeUri,
             $option,
@@ -235,7 +235,7 @@ class ProductService extends BaseService
             $optionPerData = [
                 $paramKey => $data,
             ];
-            self::validateOption($apiName, $optionPerData, $paramKey);
+            self::validateOption($optionPerData, self::$jsonSchema[$apiName], $paramKey);
             if (isset($data['attributes'])) {
                 foreach ($data['attributes'] as $list) {
                     foreach ($list as $key => $value) {
@@ -272,7 +272,7 @@ class ProductService extends BaseService
         }
 
         return ApiRequestHandler::Request(
-            self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
+            self::$baseUri[self::$productApi[$apiName]['baseUri']],
             $method,
             $relativeUri,
             $option,
@@ -300,7 +300,7 @@ class ProductService extends BaseService
             'query' => $params,
         ];
 
-        self::validateOption($apiName, $option, 'query');
+        self::validateOption($option, self::$jsonSchema[$apiName], 'query');
         // prepare params to send
         $withBracketParams = [];
         if (isset($params['attributes'])) {
@@ -327,7 +327,7 @@ class ProductService extends BaseService
         //  unset `query` key because query string will be build in ApiRequestHandler and will be added to uri so dont need send again in query params
         unset($option['query']);
         return ApiRequestHandler::Request(
-            self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
+            self::$baseUri[self::$productApi[$apiName]['baseUri']],
             self::$productApi[$apiName]['method'],
             $relativeUri,
             $option,
@@ -355,7 +355,7 @@ class ProductService extends BaseService
             'query' => $params,
         ];
 
-        self::validateOption($apiName, $option, 'query');
+        self::validateOption($option, self::$jsonSchema[$apiName], 'query');
         // prepare params to send
         $withBracketParams = [];
         if (isset($params['attributes'])) {
@@ -385,7 +385,7 @@ class ProductService extends BaseService
         //  unset `query` key because query string will be build in ApiRequestHandler and will be added to uri so dont need send again in query params
         unset($option['query']);
         return ApiRequestHandler::Request(
-            self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
+            self::$baseUri[self::$productApi[$apiName]['baseUri']],
             self::$productApi[$apiName]['method'],
             $relativeUri,
             $option,
@@ -415,7 +415,7 @@ class ProductService extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         # prepare params to send
         # set service call product Id
@@ -427,7 +427,7 @@ class ProductService extends BaseService
             unset($option[$paramKey]);
         }
         return ApiRequestHandler::Request(
-            self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
+            self::$baseUri[self::$productApi[$apiName]['baseUri']],
             self::$productApi[$apiName]['method'],
             $relativeUri,
             $option,
@@ -455,7 +455,7 @@ class ProductService extends BaseService
             'query' => $params,
         ];
 
-        self::validateOption($apiName, $option, 'query');
+        self::validateOption($option, self::$jsonSchema[$apiName], 'query');
         // prepare params to send
         if (isset($params['query'])) {
             $params['q'] = $params['query'];
@@ -486,7 +486,7 @@ class ProductService extends BaseService
         //  unset `query` key because query string will be build in ApiRequestHandler and will be added to uri so dont need send again in query params
         unset($option['query']);
         return ApiRequestHandler::Request(
-            self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
+            self::$baseUri[self::$productApi[$apiName]['baseUri']],
             self::$productApi[$apiName]['method'],
             $relativeUri,
             $option,
@@ -514,7 +514,7 @@ class ProductService extends BaseService
             'query' => $params,
         ];
 
-        self::validateOption($apiName, $option, 'query');
+        self::validateOption($option, self::$jsonSchema[$apiName], 'query');
         // prepare params to send
         if (isset($params['query'])) {
             $params['q'] = $params['query'];
@@ -545,7 +545,7 @@ class ProductService extends BaseService
         //  unset `query` key because query string will be build in ApiRequestHandler and will be added to uri so dont need send again in query params
         unset($option['query']);
         return ApiRequestHandler::Request(
-            self::$config[self::$serverType][self::$productApi[$apiName]['baseUri']],
+            self::$baseUri[self::$productApi[$apiName]['baseUri']],
             self::$productApi[$apiName]['method'],
             $relativeUri,
             $option,

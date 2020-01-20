@@ -44,18 +44,18 @@
 
         },
         "canComment": {
-          "type": "string",
+          "type": ["string", "boolean"],
           "title": "امکان نظر دادن",
           "description":"true/false"
         },
         "canLike": {
-          "type": "string",
+          "type": ["string", "boolean"],
           "title": "امکان like کردن",
           "description":"true/false"
 
         },
         "enable": {
-          "type": "string",
+          "type": ["string", "boolean"],
           "title": "نمایش دادن در تایم لاین true/false",
           "description":"اگر true باشد امکان جستجوی محصول برای عموم وجود دارد."
 
@@ -73,7 +73,7 @@
 
         },
         "unlimited": {
-          "type": "string",
+          "type": ["string", "boolean"],
           "title": "بدون محدودیت بودن محصول true/false",
           "description":"در صورت true بودن این فیلد تعداد محصول بدون محدودیت خواهد بود"
 
@@ -104,11 +104,10 @@
         "allowUserInvoice": {
           "title": "اجازه صدور فاکتور توسط مشتری",
           "description":"مقدار پیش فرض: false",
-
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "allowUserPrice": {
-          "type": "string",
+          "type": ["string", "boolean"],
           "title": "اجازه ورود مبلغ توسط مشتری هنگام صدور فاکتور توسط مشتری",
           "description": "مقدار پیش فرض: false"
         },
@@ -137,7 +136,7 @@
                 "description":""
               },
               "attGroup": {
-                "type": "string",
+                "type": ["string", "boolean"],
                 "title": "ایجاد گروه محصول با این مشخصه، اگر true باشد به همه زیر محصول ها اعمال میشود.",
                 "description":""
               }
@@ -271,7 +270,7 @@
           "type": "integer"
         },
         "unlimited": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "availableCount": {
           "type": "number"
@@ -288,10 +287,10 @@
           "type": "string"
         },
         "allowUserInvoice": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "allowUserPrice": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "currencyCode": {
           "type": "string"
@@ -300,7 +299,7 @@
           "type": "array",
           "items": {
             "type": "array",
-            "properties": {
+            "items": {
               "attCode": {
                 "type": "string"
               },
@@ -308,7 +307,7 @@
                 "type": "string"
               },
               "attGroup": {
-                "type": "string"
+                "type": ["string", "boolean"]
               }
             },
             "required": ["attCode", "attValue", "attGroup"],
@@ -402,13 +401,13 @@
           "type": "string"
         },
         "canComment": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "canLike": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "enable": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "metaData": {
           "type": "string"
@@ -417,7 +416,7 @@
           "type": "integer"
         },
         "unlimited": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "availableCount": {
           "type": "number"
@@ -434,10 +433,10 @@
           "type": "string"
         },
         "allowUserInvoice": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "allowUserPrice": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "currencyCode": {
           "type": "string"
@@ -457,7 +456,7 @@
                 "type": "string"
               },
               "attGroup": {
-                "type": "string"
+                "type": ["string", "boolean"]
               }
             },
             "required": ["attCode", "attValue", "attGroup"],
@@ -468,10 +467,10 @@
           "type": "integer"
         },
         "lat": {
-          "type": "number"
+          "type": ["string", "number"]
         },
         "lng": {
-          "type": "number"
+          "type": ["string", "number"]
         },
         "tags": {
           "oneOf": [
@@ -569,13 +568,13 @@
           "type": "integer"
         },
         "canComment": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "canLike": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "enable": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "metaData": {
           "type": "string"
@@ -584,16 +583,10 @@
           "type": "integer"
         },
         "unlimited": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "availableCount": {
           "type": "number"
-        },
-        "categories": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         },
         "guildCode": {
           "type": "string"
@@ -638,7 +631,7 @@
           "maximum": 100
         },
         "changePreview": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "lat": {
           "type": "number"
@@ -725,13 +718,13 @@
           "type": "integer"
         },
         "canComment": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "canLike": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "enable": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "metaData": {
           "type": "string"
@@ -740,25 +733,19 @@
           "type": "integer"
         },
         "unlimited": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "availableCount": {
           "type": "number"
-        },
-        "categories": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         },
         "guildCode": {
           "type": "string"
         },
         "allowUserInvoice": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "allowUserPrice": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "attTemplateCode": {
           "type": "string"
@@ -775,7 +762,7 @@
                 "type": "string"
               },
               "attGroup": {
-                "type": "string"
+                "type": ["string", "boolean"]
               }
             },
             "required": ["attCode", "attValue", "attGroup"],
@@ -794,7 +781,7 @@
           "maximum": 100
         },
         "changePreview": {
-          "type": "string"
+          "type": ["string", "boolean"]
         },
         "lat": {
           "type": "number"
@@ -1018,10 +1005,10 @@
         }
       },
       "oneOf" : [
-        { "required": ["offset"]},
-        { "required": ["id"]},
-        { "required": ["firstId"]},
-        { "required": ["lastId"]}
+        { "required": ["offset", "size"]},
+        { "required": ["id", "size"]},
+        { "required": ["firstId", "size"]},
+        { "required": ["lastId", "size"]}
       ],
       "additionalProperties": false
     }
@@ -1142,18 +1129,7 @@
           "enum": ["PARENT_PRODUCT", "BUSINESS_PRODUCT", "DEALER_PRODUCT_PERMISSION"]
         },
         "attributeSearchQuery":{
-          "oneOf": [
-            {
-              "type": "string",
-              "title": "",
-              "description": "json حاوی اطلاعات جستجو بر روی صفات از نوع SearchMetadataCriteria"
-            },
-            {
-              "type": "array",
-              "title": "",
-              "description": "json حاوی اطلاعات جستجو بر روی صفات از نوع SearchMetadataCriteria"
-            }
-          ]
+          "type": ["array", "string"]
         },
 
         "scVoucherHash": {
@@ -1170,10 +1146,10 @@
         }
       },
       "oneOf" : [
-        { "required": ["offset"]},
-        { "required": ["id"]},
-        { "required": ["firstId"]},
-        { "required": ["lastId"]}
+        { "required": ["offset", "size"]},
+        { "required": ["id",  "size"]},
+        { "required": ["firstId", "size"]},
+        { "required": ["lastId", "size"]}
       ],
       "additionalProperties": false
     }
@@ -1234,9 +1210,9 @@
         }
       },
       "oneOf" : [
-        { "required": ["offset"]},
-        { "required": ["firstId"]},
-        { "required": ["lastId"]}
+        { "required": ["offset", "size"]},
+        { "required": ["firstId", "size"]},
+        { "required": ["lastId", "size"]}
         ],
       "additionalProperties": false
     }
@@ -1276,7 +1252,8 @@
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "additionalItems": false
         },
         "businessId": {
           "type": "integer"
@@ -1349,6 +1326,14 @@
         },
         "tagTrees": {
           "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tagTreeCategoryName": {
+          "type": "array",
+          "title": "دسته بندی درخت تگ",
+          "description": "دسته بندی درخت تگ",
           "items": {
             "type": "string"
           }
@@ -1449,6 +1434,14 @@
         },
         "tagTrees": {
           "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tagTreeCategoryName": {
+          "type": "array",
+          "title": "دسته بندی درخت تگ",
+          "description": "دسته بندی درخت تگ",
           "items": {
             "type": "string"
           }

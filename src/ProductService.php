@@ -11,6 +11,7 @@ namespace Pod\Product\Service;
 
 use Pod\Base\Service\BaseService;
 use Pod\Base\Service\ApiRequestHandler;
+use Pod\Base\Service\Exception\ValidationException;
 
 class ProductService extends BaseService
 {
@@ -108,11 +109,15 @@ class ProductService extends BaseService
         }
         unset($params['apiToken']);
 
+        if(!isset($params['data']) || empty($params['data'])) {
+            throw new ValidationException(['data' => ['The property data is required']], 'The property data is required.',ValidationException::VALIDATION_ERROR_CODE);
+        }
         // prepare params to send
         foreach ($params['data'] as $dataKey => $data) {
             $optionPerData = [
                 $paramKey => $data,
             ];
+
             self::validateOption($optionPerData, self::$jsonSchema[$apiName], $paramKey);
             if (isset($data['attributes'])) {
                 foreach ($data['attributes'] as $list) {
@@ -136,7 +141,6 @@ class ProductService extends BaseService
         # set service call product Id
         $preparedParams['scProductId'] = self::$serviceProductId[$apiName];
         $preparedParams['data'] =  json_encode($params['data']);
-
         $option = [
             'headers' => $header,
             $paramKey => $preparedParams,
@@ -190,6 +194,11 @@ class ProductService extends BaseService
             unset($params['attributes']);
         }
 
+        if (isset($params['categories'])){
+            $withBracketParams['categories'] = $params['categories'];
+            unset($params['categories']);
+        }
+
         if(isset($params['tags']) && is_array($params['tags'])){
             $params['tags'] =  implode(',', $params['tags']);
         }
@@ -231,6 +240,9 @@ class ProductService extends BaseService
         unset($params['apiToken']);
 
         // prepare params to send
+        if(!isset($params['data']) || empty($params['data'])) {
+            throw new ValidationException(['data' => ['The property data is required']], 'The property data is required.',ValidationException::VALIDATION_ERROR_CODE);
+        }
         foreach ($params['data'] as $dataKey => $data) {
             $optionPerData = [
                 $paramKey => $data,

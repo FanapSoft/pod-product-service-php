@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: keshtgar
- * Date: 11/11/19
- * Time: 9:49 AM
- */
 use PHPUnit\Framework\TestCase;
 use Pod\Product\Service\ProductService;
 use Pod\Base\Service\BaseInfo;
@@ -16,13 +10,13 @@ final class ProductServiceTest extends TestCase
 //    public static $apiToken;
     public static $productService;
     const TOKEN_ISSUER = 1;
-    const API_TOKEN = '4d3d6b85e2e844b0ade83cc2ec5b4c85';
-    const API_TOKEN_12582 = '954e58d14f544bd0b5daa7f9401ed3ea';
-    const API_TOKEN_3 = '2b02de2188a149bfa74b7760d4a64c85';
-    const ACCESS_TOKEN = '7e1044745ba543ce97231dafa200859f';
-    const CLIENT_ID = '6257411i38cb46e0ae26be4629583b22';
-    const CLIENT_SECRET = 'd33b5e71';
-    const CONFIRM_CODE = '2007431';
+    const API_TOKEN = '{Put API Token}';
+    const API_TOKEN_12582 = '{Put API Token2}';
+    const API_TOKEN_3 = '{Put API Token3}';
+    const ACCESS_TOKEN = '{Put ACCESS Token}';
+    const CLIENT_ID = '{Put Client ID}';
+    const CLIENT_SECRET = '{Put Client Secret}';
+    const CONFIRM_CODE = '{Put Confirmation Code}';
     const INFORMATION_TECHNOLOGY_GUILD = 'INFORMATION_TECHNOLOGY_GUILD';
     const TOILETRIES_GUILD = 'TOILETRIES_GUILD';
 

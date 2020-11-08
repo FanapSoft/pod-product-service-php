@@ -54,6 +54,12 @@
           "description":"true/false"
 
         },
+        "canRate": {
+          "type": ["string", "boolean"],
+          "title": "امکان rate دادن",
+          "description":"true/false"
+
+        },
         "enable": {
           "type": ["string", "boolean"],
           "title": "نمایش دادن در تایم لاین true/false",
@@ -222,8 +228,8 @@
         }
       },
       "oneOf": [
-        {"required": ["name",  "description", "canComment", "canLike", "enable", "availableCount", "price", "discount"]},
-        {"required": ["name",  "description", "canComment", "canLike", "enable", "unlimited", "price", "discount"]}
+        {"required": ["name",  "description", "canComment", "canLike", "canRate", "enable", "availableCount", "price", "discount"]},
+        {"required": ["name",  "description", "canComment", "canLike", "canRate", "enable", "unlimited", "price", "discount"]}
       ],
       "additionalProperties": false
     }
@@ -406,6 +412,9 @@
         "canLike": {
           "type": ["string", "boolean"]
         },
+        "canRate": {
+          "type": ["string", "boolean"]
+        },
         "enable": {
           "type": ["string", "boolean"]
         },
@@ -529,8 +538,8 @@
         }
       },
       "oneOf": [
-        {"required": ["name", "description", "canComment", "canLike", "enable", "availableCount", "price", "discount"]},
-        {"required": ["name", "description", "canComment", "canLike", "enable", "unlimited", "price", "discount"]}
+        {"required": ["name", "description", "canComment", "canLike", "canRate", "enable", "availableCount", "price", "discount"]},
+        {"required": ["name", "description", "canComment", "canLike", "canRate", "enable", "unlimited", "price", "discount"]}
       ],
       "additionalProperties": false
     }
@@ -571,6 +580,9 @@
           "type": ["string", "boolean"]
         },
         "canLike": {
+          "type": ["string", "boolean"]
+        },
+        "canRate": {
           "type": ["string", "boolean"]
         },
         "enable": {
@@ -696,8 +708,8 @@
         }
       },
       "oneOf": [
-        {"required": ["name", "description", "canComment", "canLike", "enable", "entityId", "price", "discount", "changePreview", "availableCount"]},
-        {"required": ["name", "description", "canComment", "canLike", "enable", "entityId", "price", "discount", "changePreview", "unlimited"]}
+        {"required": ["name", "description", "canComment", "canLike", "canRate", "enable", "entityId", "price", "discount", "changePreview", "availableCount"]},
+        {"required": ["name", "description", "canComment", "canLike", "canRate", "enable", "entityId", "price", "discount", "changePreview", "unlimited"]}
       ],
       "additionalProperties": false
     }
@@ -721,6 +733,9 @@
           "type": ["string", "boolean"]
         },
         "canLike": {
+          "type": ["string", "boolean"]
+        },
+        "canRate": {
           "type": ["string", "boolean"]
         },
         "enable": {
@@ -846,8 +861,8 @@
         }
       },
       "oneOf": [
-        {"required": ["name", "description", "canComment", "canLike", "enable", "entityId", "price", "discount", "changePreview", "availableCount"]},
-        {"required": ["name", "description","canComment", "canLike", "enable", "entityId", "price", "discount", "changePreview", "unlimited"]}
+        {"required": ["name", "description", "canComment", "canLike", "canRate", "enable", "entityId", "price", "discount", "changePreview", "availableCount"]},
+        {"required": ["name", "description","canComment", "canLike", "canRate", "enable", "entityId", "price", "discount", "changePreview", "unlimited"]}
       ],
       "additionalProperties": false
     }

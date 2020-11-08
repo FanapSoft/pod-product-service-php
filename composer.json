@@ -1,6 +1,6 @@
 {
     "name": "pod-sdk/pod-product-service",
-    "version": "4.0.0",
+    "version": "4.1.0",
     "type": "library",
     "keywords": ["sdk", "pod sdk", "pod sdk product service", "pod product service"],
     "license": "MIT",
